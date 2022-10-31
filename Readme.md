@@ -4,4 +4,4 @@ Team Members
 1. Kavi Bharathi S (Team Leader)
 2. Harish Kumar R B
 3. Gokul Kavin S
-4. Digeesraj S
+4. Digeeshraj S
