@@ -1,6 +1,6 @@
 FROM python
 
-WORKDIR /app-jobportal-docker
+WORKDIR /jobportal
 
 COPY requirements.txt requirements.txt
 
