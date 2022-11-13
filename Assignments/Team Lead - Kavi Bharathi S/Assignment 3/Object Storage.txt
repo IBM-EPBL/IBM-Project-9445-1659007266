@@ -1,0 +1,14 @@
+Primary Endpoint: https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/
+
+Files: 
+HTML - 1
+CSS - 1
+Images - 5
+
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/index.html
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/style.css
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/Bengal.jpg
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/Birman.jpg
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/MaineCoon.jpg
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/Ragdoll.jpg
+https://nalayathiran-assignment-3-bucket.s3-web.us-east.cloud-object-storage.appdomain.cloud/Sphynx.jpg
