@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>PDA - Donors</title>
+<style>
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 75%;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.75rem;
+  }
+</style>
+{% endblock %}
+
+<section class="vh-200 main-bg-light">
+  <div class="container pt-5">
+
+
+    <div class="mb-5 text-center">
+      <i class="fa-solid fa-hand-holding-droplet fa-2x me-3 text-custom-secondary"></i>
+      <span class="h2 fw-bold mb-0">Donors List</span>
+    </div>
+    <div class="row">
+      {% for key, value in donors.items() %}
+      <div class="col-xl-3 col-sm-6">
+        <div class="card glass mb-4">
+          <div class="card-body">
+            <div>
+              <h5 class="font-size-16 mb-1 text-dark fw-semibold">{{value['UNAME']}}</h5>
+              <span class="badge custom-secondary-bg text-custom-secondary mb-0">{{value['UID']}}</span>
+            </div>
+            <div class="mt-4">
+              <p class="text-muted mb-4">
+                <i class="fa-solid fa-hand-holding-droplet text-custom-accent me-2"></i>
+                {{value['BGROUP']}}{{value['RH']}}
+              </p>
+              <p class="text-muted mb-4">
+                <i class="fa-solid fa-person-half-dress text-custom-accent me-2"></i>
+                {{value['GENDER']}}
+              </p>
+              <p class="text-muted mb-4">
+                <i class="fa-solid fa-weight text-custom-accent me-2"></i>
+                {{value['WEIGHT']}} kg
+              </p>
+              <p class="text-muted mb-4">
+                <i class="fa-solid fa-map-location-dot text-custom-accent me-2"></i>
+                {{value['CITY']}}, {{value['ST']}}
+              </p>
+            </div>
+            <button type="button" class="btn btn-dark text-white custom-primary btn-sm w-100"><i
+                class="fa-solid fa-message"></i> Request
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+</body>
+
+</html>

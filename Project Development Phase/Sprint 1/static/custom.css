@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+.login-bg{
+    background-image: linear-gradient(219deg, rgba(235,0,0,1) 0%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 98%);
+}
+
+.rounded-rem{
+    border-radius: 1rem;
+}
