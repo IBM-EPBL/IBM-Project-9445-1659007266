@@ -58,17 +58,17 @@ body{
 
 .main-bg{
     background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-image: linear-gradient(43deg,rgba(235,0,0,1) 0%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 93%);
 }
 
 .main-bg-medium{
     background-color: #667be2;
-    background-image: linear-gradient(43deg, #8294ef 0%, #ed85e6 46%, #ffdfa4 100%);
+    background-image: linear-gradient(43deg,rgba(235,0,0,1) 0%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 93%);
 }
 
 .main-bg-light{
     background-color: #798CE8;
-    background-image: linear-gradient(43deg, #dfe5ff 0%, #ffeffe 46%, #fff2e1 100%);
+    background-image: linear-gradient(43deg,rgba(235,0,0,1) 0%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 93%);
 }
 
 .rounded-rem{

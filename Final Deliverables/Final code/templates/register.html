@@ -15,7 +15,7 @@
                 <div class="card rounded-rem">
                     <div class="row g-0 align-items-center">
                         <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            <img src="../static/home.png"
+                            <img src="../static/img/donate2.gif"
                                 class="img-fluid rounded-rem" />
                         </div>
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
@@ -29,11 +29,15 @@
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="dtype">
-                                            <i class="fa-solid fa-user-group me-3 text-custom-accent"></i>Register as</label>
-                                        <select class="form-select form-control-lg" name="dtype" aria-label="Select ID Type" required>
-                                            <option value="Donor" selected>Donor</option>
-                                            <option value="Patient">Patient</option>
-                                        </select>
+                                            <i class="fa-solid fa-user-group me-3 text-custom-accent"></i>Register as </label>
+                                            <input class="form-check-input" type="radio" name="dtype" id="patient" value="Patient" checked>
+                                            <label class="form-check-label" for="patient">
+                                                Patient
+                                            </label>
+                                            <input class="form-check-input" type="radio" name="dtype" id="donor" value="Donor">
+                                            <label class="form-check-label" for="donor">
+                                                Donor
+                                            </label>
                                     </div>
 
 

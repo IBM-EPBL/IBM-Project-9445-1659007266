@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>GetPlasma - Dashboard</title>
+<title>PDA - Dashboard</title>
 {% endblock %}
 
 
@@ -17,7 +17,7 @@
                     <span class="h2 fw-bold mb-0">{{session.DTYPE}} Profile</span>
                 </div>
 
-                <form action="{{url_for('medform')}}" method="POST" class="row g-3" name="medform" enctype="multipart/form-data">
+                <form action="{{url_for('medform')}}" method="POST" class="row g-3" name="medform" enctype="multipart/form-data" style="background: rgba(255,255,255,0.8);">
                     <div class="form-outline mb-4 col-md-6">
                         <label class="form-label" for="uname">
                             <i class="fa-solid fa-user-tag me-3 text-custom-accent text-custom-accent"></i>Username</label>
@@ -63,7 +63,7 @@
                             <i class="fa-solid fa-address-card me-3 text-custom-accent"></i>Weight</label>
                         <input type="number" 
                             {% if session.DTYPE=="Donor" %} 
-                                min="45" 
+                                min="50" 
                             {% else %}
                                 min="0"
                             {%endif%}
@@ -90,31 +90,6 @@
                             </select>
                         </div>
                     </div>
-
-
-                    {% if session.DTYPE == 'Donor' %} {# Medical Certificate is required only for donors #}
-
-                        <div class="form-outline mb-4 col-12">
-                            <label class="form-label col-12">
-                                <i class="fa-solid fa-notes-medical me-3 text-custom-accent"></i>Medical Fitness Certificate</label>
-
-                            {% if not session.MEDFILE %}
-                                <!--medical certificate not yet uploaded-->
-                            {% elif '.pdf' in session.MEDFILE %}
-                            <div class="d-flex w-100 justify-content-center col-lg-3 col-sm-12 mb-4">
-                                <iframe src="{{session.MEDFILE}}" class="shadow rounded-5 main-bg p-1 col-6"></iframe>
-                            </div>
-                            {% else %}
-                                <div class="d-flex w-100 justify-content-center col-lg-3 col-sm-12 mb-4">
-                                    <img src="{{session.MEDFILE}}" class="shadow rounded-5 main-bg p-1 w-50"/>
-                                </div>
-                            {% endif %}
-
-                            <input class="form-control glass" placeholder="Upload medical certificate" type="file" name="medfile" id="medfile" accept=".pdf, image/*" required>
-                            
-                        </div>
-
-                    {% endif %}
 
 
                     <div class="form-outline mb-4 col-12">

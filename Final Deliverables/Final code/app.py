@@ -1,32 +1,24 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, Markup
 import ibm_db
-import os
 import sendgrid #Email API
-import os
 import json, re
-import dotenv
 from sendgrid.helpers.mail import Mail, Email, To, Content  #Additional Email Helper Classes
-
+import os
+import dotenv 
 
 app = Flask(__name__)
 
+#secret key required to maintain unique user sessions
+app.secret_key = os.environ.get('APP_KEY')
+
 dotenv.load_dotenv()
 
-#secret key required to maintain unique user sessions
-app.secret_key = '123'
-
 #establish connection with IBM Db2 Database
-connection = ibm_db.connect("DATABASE=bludb;HOSTNAME=824dfd4d-99de-440d-9991-629c01b3832d.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=;SECURITY=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=qfz71349;PWD=ycPT38SnjYee8oqD;","","")
+connection = ibm_db.connect("DATABASE=bludb;HOSTNAME=824dfd4d-99de-440d-9991-629c01b3832d.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=30119;SECURITY=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=qfz71349;PWD=ycPT38SnjYee8oqD;", "", "")
 
 #Email Prerequisites
-sg = sendgrid.SendGridAPIClient(api_key='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')   #set SendGrid API Key
+sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))   #set SendGrid API Key
 from_email = Email("pnt2022tmi14769@gmail.com")     #the address that sends emails to the users
-
-#WhatsApp Prerequisites
-account = os.environ.get('TWILIO_ACCOUNT_SID')
-token = os.environ.get('TWILIO_AUTH_TOKEN')
-sender_phone = os.environ.get('TWILIO_WHATSAPP')   #the number from which messages are sent to the user
-
 
 @app.route('/')
 @app.route('/dashboard')
@@ -63,7 +55,6 @@ def register():
 def regform():
     #get user details from the registration form
     uname = request.form['uname']
-    utype = request.form['utype']   #Select email or phone number
     uid = request.form['uid']       #Selected contact id type
     pwd = request.form['pwd']
     dtype = request.form['dtype']   #donor/patient user type
@@ -86,30 +77,12 @@ def regform():
         ibm_db.bind_param(pstmt, 3, uname)
         ibm_db.execute(pstmt)
 
-        if utype == 'mail':
-
-            to_email = To(uid)   #set user as recipient for confirmation email
-            subject = "Welcome to GetPlasma"
-            content = Content("text/html", "<p>Hello " + uname + ",</p><p>Thank you for registering to the GetPlasma Application!</p><p>If this wasn't you, then immediately report to our <a href=\"mailto:getplasmaproject@gmail.com\">admin</a> or just reply to this email.</p>")
-
-            email = Mail(from_email, to_email, subject, content) #construct email format
-            email_json = email.get()    #get JSON-ready representation of the mail object
-
-            response = sg.send(email)  #send email by invoking an HTTP/POST request to /mail/send
-        
-        else:   #if user registered with phone number
-            
-            flash(
-                Markup(
-                    '''<div class="d-flex flex-column">
-                            <div class="d-flex flex-row align-items-center mb-3">
-                                <div class="text-start me-3">Please join our WhatsApp Chat to receive alerts by clicking the button below or just scan the QR Code</div>
-                                <img class="rounded" width="50%" src="https://plasma-donor.s3.jp-tok.cloud-object-storage.appdomain.cloud/WhatsAppQR.png"/>
-                            </div>
-                            <a class="btn btn-light btn-sm" target="_blank" href="https://wa.me/14155238886?text=join%20did-take">Join</a>
-                        </div>'''
-                )
-            )
+        to_email = To(uid)   #set user as recipient for confirmation email
+        subject = "Welcome to Plasma Donor Application"
+        content = Content("text/html", "<p>Hello " + uname + ",</p><p>Thank you for registering to the GetPlasma Application!</p><p>If this wasn't you, then immediately report to our <a href=\"mailto:getplasmaproject@gmail.com\">admin</a> or just reply to this email.</p>")
+        email = Mail(from_email, to_email, subject, content) #construct email format
+        email_json = email.get()    #get JSON-ready representation of the mail object
+        response = sg.client.mail.send.post(request_body = email_json)   #send email by invoking an HTTP/POST request to /mail/send
         
         flash('Registration Successful! Sign in using the registered credentials to continue')
 
@@ -147,7 +120,6 @@ def signinform():
         for keys, vals in acc.items():
             session[keys] = vals
         session['DTYPE'] = dtype
-        session['UTYPE'] = request.form['utype'] #Email/Phone Number
         flash('Signed in successfully!')
         return redirect(url_for('dashboard'))
         
@@ -167,15 +139,13 @@ def medform():
     bgroup = request.form['bgroup']
     rh = request.form['rh']
     dtype = session['DTYPE']  #donor/patient user type
-    if dtype == 'Donor':
-        medfile = request.files['medfile']
     addr = request.form['addr']
     city = request.form['city']
     st = request.form['st']
     zip = request.form['zip']
 
     #update user's medical and contact details
-    sql = f"UPDATE {dtype} SET uname=?, uage=?, gender=?, weight=?, bgroup=?, rh=?, {'medfile=?, ' if dtype == 'Donor' else ''}addr=?, city=?, st=?, zip=? WHERE uid=?"
+    sql = f"UPDATE {dtype} SET uname=?, uage=?, gender=?, weight=?, bgroup=?, rh=?, addr=?, city=?, st=?, zip=? WHERE uid=?"
     pstmt = ibm_db.prepare(connection, sql)
     param = uname, uage, gender, weight, bgroup, rh, addr, city, st, zip, uid
     ibm_db.execute(pstmt, param)
@@ -199,7 +169,7 @@ def medform():
 
 @app.route('/donors')   #populate donor page
 def donors():
-    sql = 'SELECT uid, uname, uage, gender, weight, bgroup, rh, medfile, addr, city, st, zip from DONOR'
+    sql = 'SELECT uid, uname, uage, gender, weight, bgroup, rh, addr, city, st, zip from DONOR'
     stmt = ibm_db.exec_immediate(connection, sql)   #fetch donor data from the database
     
     donor_list = {}

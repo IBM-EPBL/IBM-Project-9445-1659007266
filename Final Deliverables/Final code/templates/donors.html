@@ -81,7 +81,7 @@
             {% for key, value in donors.items() %}
             <div class="col-xl-3 col-sm-6 donor-card">
                 <div class="card glass mb-4">
-                    <div class="card-body">
+                    <div class="card-body" style="background: rgba(255,255,255,0.6);">
                         <div>
                             <h5 id="uname-{{key}}" class="font-size-16 mb-1 text-dark fw-semibold">{{ value['UNAME'] }}</h5>
                             <span id="uid-{{key}}" class="badge custom-secondary-bg text-custom-secondary mb-0">{{ value['UID'] }}</span>
@@ -98,11 +98,6 @@
                             <p class="text-muted mb-4">
                                 <i class="fa-solid fa-weight text-custom-accent me-2"></i>
                                 {{value['WEIGHT']}} kg
-                            </p>
-                            <p class="link text-muted mb-4">
-                                <i class="fa-solid fa-notes-medical text-custom-accent me-2"></i>
-                                <a href="#modal" data-id="{{value['MEDFILE']}}" data-bs-toggle="modal"
-                                    class="text-muted show-medcert">View Medical Certificate</a>
                             </p>
                             <p class="text-muted mb-4 city-state">
                                 <i class="fa-solid fa-map-location-dot text-custom-accent me-2"></i>
