@@ -202,11 +202,11 @@ def processRequestPlasma(userinfo):
                     <p>Address : </p>
                     <p>{session['ADDR']} <br> {session['CITY']} <br> {session['ST']} - {session['ZIP']}</p>
                     <br><br><br>
-                    <p>Click <a href=\"{'mailto:' if session['UTYPE'] == 'email' else 'tel:+91'}{session['UID']}\">here</a> to contact them</p>
+                    <p>Click <a href="mailto:{session['UID']}">here</a> to contact them.</p>
                     <br><br>
-                    <p>Hope you use this opportunity to save someone's life</p>
+                    <p>Hope you use this chance to save someone's life</p>
                     <br><br>
-                    <p>Regards,<br>Team GetPlasma</p>''')
+                    <p>Regards,<br>Team Plasma Donation Application</p>''')
     
     email = Mail(from_email, to_email, subject, content) #construct email format
     email_json = email.get()    #get JSON-ready representation of the mail object
