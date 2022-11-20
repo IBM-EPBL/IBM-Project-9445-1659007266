@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: plasma-app
+  name: plasma-donote-app
 
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: plasma-app
+      app: plasma-donote-app
   template:
     metadata:
       labels:
-        app: plasma-app
+        app: plasma-donote-app
 
     spec:
       containers:
-        - name: plasma-container
-          image: jp.icr.io/plasma-ns/plasma-repo
+        - name: plasma-donote-container
+          image: jp.icr.io/plasmadonateapp/pda
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
               protocol: TCP
+              

@@ -16,8 +16,10 @@ spec:
     spec:
       containers:
         - name: plasma-container
-          image: jp.icr.io/plasma-ns/plasma-repo
+          image: jp.icr.io/plasmadonateapp/pda
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
               protocol: TCP
+
+              
